@@ -1,12 +1,57 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home
+Weather Chatbot
 {% endblock %}
 
 {% block content %}
+
 <h2>Welcome {{ request.user.username }} 👋</h2>
 
-<p>This is our Django Weather Chatbot.</p>
+<hr>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.message }}
+
+    <button type="submit">
+        Send
+    </button>
+
+</form>
+
+<hr>
+
+{% if response %}
+
+    <h3>Bot Reply</h3>
+
+    <p>{{ response.reply }}</p>
+
+    {% if response.weather %}
+
+        <h3>Weather Details</h3>
+
+        <ul>
+
+            <li><strong>City:</strong> {{ response.weather.city }}</li>
+
+            <li><strong>Temperature:</strong> {{ response.weather.temperature }} °C</li>
+
+            <li><strong>Feels Like:</strong> {{ response.weather.feels_like }} °C</li>
+
+            <li><strong>Humidity:</strong> {{ response.weather.humidity }}%</li>
+
+            <li><strong>Wind Speed:</strong> {{ response.weather.wind_speed }} m/s</li>
+
+            <li><strong>Condition:</strong> {{ response.weather.description }}</li>
+
+        </ul>
+
+    {% endif %}
+
+{% endif %}
 
 {% endblock %}

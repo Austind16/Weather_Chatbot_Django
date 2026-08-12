@@ -20,6 +20,7 @@ class ChatbotService:
                 "reply": "Hello! 👋 Ask me about the weather.",
                 "weather": None,
                 "last_city": last_city,
+                "intent": intent,
             }
 
         # Low confidence
@@ -29,6 +30,7 @@ class ChatbotService:
                 "reply": "I'm not sure what you mean. Could you rephrase that?",
                 "weather": None,
                 "last_city": last_city,
+                "intent": intent,
             }
 
         # No city available
@@ -38,6 +40,7 @@ class ChatbotService:
                 "reply": "Please tell me which city you're asking about.",
                 "weather": None,
                 "last_city": last_city,
+                "intent": intent,
             }
 
         weather = WeatherService.get_weather(city)
@@ -48,6 +51,7 @@ class ChatbotService:
                 "reply": weather["message"],
                 "weather": None,
                 "last_city": last_city,
+                "intent": intent,
             }
 
         replies = {
@@ -66,4 +70,5 @@ class ChatbotService:
             "reply": replies.get(intent, "Sorry, I couldn't understand that."),
             "weather": weather,
             "last_city": weather["city"],
+            "intent": intent,
         }

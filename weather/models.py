@@ -10,6 +10,14 @@ class Chat(models.Model):
 
     user_message = models.TextField()
     bot_response = models.TextField()
+    intent = models.CharField(
+        max_length=50,
+        blank=True
+    )
+    city = models.CharField(
+        max_length=100,
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

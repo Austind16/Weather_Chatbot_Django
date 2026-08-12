@@ -6,52 +6,65 @@ Weather Chatbot
 
 {% block content %}
 
-<h2>Welcome {{ request.user.username }} 👋</h2>
+<div class="chat-container">
 
-<hr>
+    <div class="weather-card">
 
-<form method="POST">
+        <h2>🌤 Weather</h2>
 
-    {% csrf_token %}
+        {% if response and response.weather %}
 
-    {{ form.message }}
+            <h3>{{ response.weather.city }}</h3>
 
-    <button type="submit">
-        Send
-    </button>
+            <p>{{ response.weather.temperature }}°C</p>
 
-</form>
+            <p>{{ response.weather.description }}</p>
 
-<hr>
+            <p>Humidity: {{ response.weather.humidity }}%</p>
 
-{% if response %}
+            <p>Wind: {{ response.weather.wind_speed }} m/s</p>
 
-    <h3>Bot Reply</h3>
+        {% else %}
 
-    <p>{{ response.reply }}</p>
+            <p>No weather searched yet.</p>
 
-    {% if response.weather %}
+        {% endif %}
 
-        <h3>Weather Details</h3>
+    </div>
 
-        <ul>
+    <div class="chat-card">
 
-            <li><strong>City:</strong> {{ response.weather.city }}</li>
+        <div class="chat-header">
 
-            <li><strong>Temperature:</strong> {{ response.weather.temperature }} °C</li>
+            Welcome {{ request.user.username }} 👋
 
-            <li><strong>Feels Like:</strong> {{ response.weather.feels_like }} °C</li>
+        </div>
 
-            <li><strong>Humidity:</strong> {{ response.weather.humidity }}%</li>
+        <div class="chat-body" id="chat-body">
 
-            <li><strong>Wind Speed:</strong> {{ response.weather.wind_speed }} m/s</li>
+             <p class="welcome-message">
+            👋 Ask me about the weather!
+            </p>
 
-            <li><strong>Condition:</strong> {{ response.weather.description }}</li>
+        </div>
 
-        </ul>
+        <div class="chat-footer">
 
-    {% endif %}
+            <form id="chat-form" method = "POST">
+                {% csrf_token %}
 
-{% endif %}
+                {{ form.message }}
+
+                <button type="submit">
+                     Send
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

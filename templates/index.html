@@ -6,6 +6,7 @@ Weather Chatbot
 
 {% block content %}
 
+{% load tz %}
 <div class="chat-container">
 
     <div class="weather-card">
@@ -41,12 +42,36 @@ Weather Chatbot
         </div>
 
         <div class="chat-body" id="chat-body">
+ {% if chats %}
 
-             <p class="welcome-message">
-            👋 Ask me about the weather!
+            {% for chat in chats %}
+
+                <div class="user-message">
+                    {{ chat.user_message }}
+                </div>
+
+                <span class="message-time">
+                    {{ chat.created_at|localtime|date:"M d, Y H:i A" }}
+                </span>
+
+                <div class="bot-message">
+                    {{ chat.bot_response }}
+                </div>
+                <span class="message-time">
+                    {{ chat.created_at|localtime|date:"M d, Y H:i A" }}
+                </span>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="welcome-message">
+                👋 Ask me about the weather!
             </p>
 
-        </div>
+        {% endif %}
+
+    </div>
 
         <div class="chat-footer">
 

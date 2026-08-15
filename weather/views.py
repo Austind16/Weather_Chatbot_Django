@@ -9,32 +9,20 @@ from .models import Chat
 
 @login_required
 def home(request):
+    chats = Chat.objects.filter(
+        user=request.user
+    ).order_by("created_at")
 
     form = ChatForm()
-    response = None
 
-    if request.method == "POST":
-        form = ChatForm(request.POST)
-
-        if form.is_valid():
-            message = form.cleaned_data["message"]
-            last_city = ConversationManager.get_last_city(request)
-
-            response = ChatbotService.process_message(message, last_city)
-
-            Chat.objects.create(
-            user=request.user,
-            user_message=message,
-            bot_response=response.get("reply", ""),
-            intent=response.get("intent", ""),
-            city=response.get("last_city", "") or "",
-)
-
-            if response["last_city"]:
-                ConversationManager.set_last_city(request, response["last_city"])
-
-        
-    return render(request, "index.html", {"form": form, "response": response})
+    return render(
+        request,
+        "index.html",
+        {
+            "chats": chats,
+            "form": form
+        }
+    )
 
 @login_required
 def chat_api(request):

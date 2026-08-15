@@ -128,17 +128,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    function addMessage(message, className) {
+    function addMessage(message, className, timestamp = null) {
 
         const messageElement = document.createElement("div");
 
         messageElement.classList.add(className);
 
-        messageElement.textContent = message;
+        const textElement = document.createElement("div");
+        textElement.textContent = message;
+
+        const timeElement = document.createElement("span");
+        timeElement.classList.add("message-time");
+
+        if (timestamp) {
+            timeElement.textContent = timestamp;
+        } else {
+            timeElement.textContent = formatCurrentTime();
+        }
+
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(timeElement);
+
 
         chatBody.appendChild(messageElement);
 
         chatBody.scrollTop = chatBody.scrollHeight;
     }
+
+    function formatCurrentTime() {
+
+    const now = new Date();
+
+    return now.toLocaleString("en-IN", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    });
+}
 
 });

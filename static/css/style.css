@@ -183,3 +183,9 @@ body{
     margin:10px 0;
 
 }
+.message-time {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    opacity: 0.6;
+}

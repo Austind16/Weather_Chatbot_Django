@@ -1,24 +1,194 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login | ClimaBot{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
 
 {% block content %}
 
-<h2>Login</h2>
+<div class="auth-page">
 
-<form method="POST">
+    <div class="auth-container">
 
-    {% csrf_token %}
+        <!-- LEFT SIDE -->
+        <section class="auth-info">
 
-    {{ form.as_p }}
+            <div class="auth-logo">
+                🌤️
+            </div>
 
-    <button type="submit">Login</button>
+                <span class="auth-eyebrow auth-brand">
+                    ClimaBot
+            </span>
 
-</form>
+            <h1>
+                Welcome<br>
+                back
+            </h1>
 
-<p>
-    Don't have an account?
-    <a href="{% url 'register' %}">Register</a>
-</p>
+            <p class="auth-description">
+                Sign in to check live weather, revisit your
+                chat history, and keep exploring weather
+                conditions in a cleaner, faster flow.
+            </p>
+
+
+            <div class="feature-list">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <div>
+                        <strong>Instant responses</strong>
+
+                        <span>
+                            Ask about rain, humidity, wind, and more.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🌍
+                    </div>
+
+                    <div>
+                        <strong>Weather anywhere</strong>
+
+                        <span>
+                            Get current conditions for your city.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-form-panel">
+
+            <div class="form-heading">
+
+                <span class="auth-eyebrow">
+                    SECURE SIGN IN
+                </span>
+
+                <h2>
+                    Login
+                </h2>
+
+                <p>
+                    Use your registered email and password to continue.
+                </p>
+
+            </div>
+
+
+            <form method="POST" class="auth-form">
+
+                {% csrf_token %}
+
+
+                <!-- EMAIL -->
+
+                <div class="auth-field">
+
+                    {{ form.username.label_tag }}
+
+                    {{ form.username }}
+
+                    {{ form.username.errors }}
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="auth-field">
+
+                    {{ form.password.label_tag }}
+
+                    {{ form.password }}
+
+                    {{ form.password.errors }}
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword()"
+                >
+                    Show password
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Sign in
+                </button>
+
+
+            </form>
+
+
+            <p class="auth-switch">
+
+                New here?
+
+                <a href="{% url 'register' %}">
+                    Create an account
+                </a>
+
+            </p>
+
+        </section>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword() {
+
+    const password =
+        document.getElementById("id_password");
+
+    const button =
+        document.querySelector(".password-toggle");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+        button.textContent = "Hide password";
+
+    } else {
+
+        password.type = "password";
+        button.textContent = "Show password";
+
+    }
+}
+
+</script>
 
 {% endblock %}

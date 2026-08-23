@@ -1,24 +1,80 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register | ClimaBot{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
 
 {% block content %}
 
-<h2>Register</h2>
+<div class="auth-page">
 
-<form method="POST">
+    <div class="auth-card">
 
-    {% csrf_token %}
+        <div class="auth-brand">
 
-    {{ form.as_p }}
+            <div class="auth-brand-icon">
+                🌤️
+            </div>
 
-    <button type="submit">Register</button>
+            <h1>Join ClimaBot</h1>
 
-</form>
+            <p>Create your weather assistant account</p>
 
-<p>
-    Already have an account?
-    <a href="{% url 'login' %}">Login</a>
-</p>
+        </div>
+
+
+        <form method="POST" class="auth-form">
+
+            {% csrf_token %}
+
+            <div class="auth-field">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="auth-field">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+
+                <small class="password-hint">
+                    8+ characters • Avoid common passwords
+                </small>
+
+                {{ form.password1.errors }}
+            </div>
+
+            <div class="auth-field">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" class="auth-button">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <p class="auth-switch">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
 
 {% endblock %}

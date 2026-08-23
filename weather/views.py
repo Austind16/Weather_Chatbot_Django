@@ -73,3 +73,24 @@ def chat_api(request):
         city=response.get("last_city", "") or "",
     )
     return JsonResponse(response)
+
+@login_required
+def clear_chat(request):
+
+    if request.method != "POST":
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "POST request required."
+            },
+            status=405
+        )
+
+    Chat.objects.filter(user=request.user).delete()
+
+    ConversationManager.clear(request)
+
+    return JsonResponse({
+        "success": True,
+        "message": "Chat cleared successfully."
+    })

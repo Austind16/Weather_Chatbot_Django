@@ -1,94 +1,272 @@
 {% extends "base.html" %}
+{% load tz %}
 
 {% block title %}
-Weather Chatbot
+WeatherChat
 {% endblock %}
 
 {% block content %}
 
-{% load tz %}
-<div class="chat-container">
+<div class="app-shell">
 
-    <div class="weather-card">
+    <!-- Header -->
+    <header class="app-header">
 
-        <h2>🌤 Weather</h2>
+        <div class="brand">
+            <div class="brand-icon">🌦️</div>
 
-        {% if response and response.weather %}
-
-            <h3>{{ response.weather.city }}</h3>
-
-            <p>{{ response.weather.temperature }}°C</p>
-
-            <p>{{ response.weather.description }}</p>
-
-            <p>Humidity: {{ response.weather.humidity }}%</p>
-
-            <p>Wind: {{ response.weather.wind_speed }} m/s</p>
-
-        {% else %}
-
-            <p>No weather searched yet.</p>
-
-        {% endif %}
-
-    </div>
-
-    <div class="chat-card">
-
-        <div class="chat-header">
-
-            Welcome {{ request.user.username }} 👋
-
+            <div>
+                <h1>WeatherChat</h1>
+                <p>Your personal weather assistant</p>
+            </div>
         </div>
 
-        <div class="chat-body" id="chat-body">
- {% if chats %}
+        <div class="user-area">
+            <span>👋 {{ request.user.username }}</span>
 
-            {% for chat in chats %}
+            <a href="{% url 'logout' %}" class="logout-btn">
+                Logout
+            </a>
+        </div>
 
-                <div class="user-message">
-                    {{ chat.user_message }}
+    </header>
+
+
+    <!-- Main application -->
+    <main class="app-main">
+
+        <!-- Weather panel -->
+        <section class="weather-panel">
+
+            <div class="panel-heading">
+                <span>Current Weather</span>
+            </div>
+
+            <div id="weather-content">
+
+                {% if response and response.weather %}
+
+                    <div class="weather-main">
+
+                        <div class="weather-icon">
+                            {% if response and response.weather.icon %}    
+                                <img
+                                    id="weather-icon"
+                                    src="https://openweathermap.org/img/wn/{{ response.weather.icon }}@2x.png"
+                                    alt="{{ response.weather.description }}"
+                                >
+                            {% else %}
+                                <span id="weather-icon">🌤️</span>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <h2 id="weather-city">
+                                {{ response.weather.city }}
+                            </h2>
+
+                            <div class="temperature">
+                                <span id="weather-temperature">
+                                    {{ response.weather.temperature }}
+                                </span>°C
+                            </div>
+
+                            <p id="weather-description">
+                                {{ response.weather.description|capfirst }}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="weather-stats">
+
+                        <div class="weather-stat">
+                            <span class="stat-icon">🌡️</span>
+                            <div>
+                                <small>Feels like</small>
+                                <strong id="weather-feels-like">
+                                    {{ response.weather.feels_like }}°C
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="weather-stat">
+                            <span class="stat-icon">💧</span>
+                            <div>
+                                <small>Humidity</small>
+                                <strong id="weather-humidity">
+                                    {{ response.weather.humidity }}%
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="weather-stat">
+                            <span class="stat-icon">💨</span>
+                            <div>
+                                <small>Wind</small>
+                                <strong id="weather-wind">
+                                    {{ response.weather.wind_speed }} m/s
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="weather-stat">
+                            <span class="stat-icon">🧭</span>
+                            <div>
+                                <small>Pressure</small>
+                                <strong id="weather-pressure">
+                                    {{ response.weather.pressure }} hPa
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="weather-stat">
+                            <span class="stat-icon">👁️</span>
+                            <div>
+                                <small>Visibility</small>
+                                <strong id="weather-visibility">
+                                    {{ response.weather.visibility }} m
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="weather-empty" id="weather-empty">
+
+                        <div class="weather-empty-icon">🌤️</div>
+
+                        <h3>No weather searched yet</h3>
+
+                        <p>
+                            Ask me about a city and its weather
+                            will appear here.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Chat panel -->
+        <section class="chat-panel">
+
+            <div class="chat-header">
+
+                <div>
+                    <h2>Conversation</h2>
+                    <span class="status">
+                        <span class="status-dot"></span>
+                        Online
+                    </span>
                 </div>
 
-                <span class="message-time">
-                    {{ chat.created_at|localtime|date:"M d, Y H:i A" }}
-                </span>
-
-                <div class="bot-message">
-                    {{ chat.bot_response }}
-                </div>
-                <span class="message-time">
-                    {{ chat.created_at|localtime|date:"M d, Y H:i A" }}
-                </span>
-
-            {% endfor %}
-
-        {% else %}
-
-            <p class="welcome-message">
-                👋 Ask me about the weather!
-            </p>
-
-        {% endif %}
-
-    </div>
-
-        <div class="chat-footer">
-
-            <form id="chat-form" method = "POST">
-                {% csrf_token %}
-
-                {{ form.message }}
-
-                <button type="submit">
-                     Send
+                    <button
+                    type="button"
+                    class="clear-chat-btn"
+                    id="clear-chat-btn">
+                    Clear Chat
                 </button>
 
-            </form>
+            </div>
 
-        </div>
 
-    </div>
+            <!-- Messages -->
+            <div class="chat-body" id="chat-body">
+
+                {% if chats %}
+
+                    {% for chat in chats %}
+
+                        <div class="message-row user-row">
+
+                            <div class="user-message">
+
+                                <div class="message-text">
+                                    {{ chat.user_message }}
+                                </div>
+
+                                <span class="message-time">
+                                    {{ chat.created_at|localtime|date:"M d, Y • h:i A" }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="message-row bot-row">
+
+                            <div class="bot-avatar">
+                                🌦️
+                            </div>
+
+                            <div class="bot-message">
+
+                                <div class="message-text">
+                                    {{ chat.bot_response }}
+                                </div>
+
+                                <span class="message-time">
+                                    {{ chat.created_at|localtime|date:"M d, Y • h:i A" }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="welcome-message">
+
+                        <div class="welcome-icon">🌦️</div>
+
+                        <h3>Welcome to WeatherChat</h3>
+
+                        <p>
+                            Ask me about the weather in any city.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Message input -->
+            <div class="chat-footer">
+
+                <form id="chat-form" method="POST">
+
+                    {% csrf_token %}
+
+                    {{ form.message }}
+
+                    <button type="submit" class="send-button">
+                        <span>Send</span>
+                        <span class="send-icon">➤</span>
+                    </button>
+
+                </form>
+
+                <p class="input-hint">
+                    Press Enter to send
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 

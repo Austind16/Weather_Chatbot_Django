@@ -11,6 +11,10 @@ class MessageParser:
         "cold",
         "warm",
         "cool",
+        "rain",
+        "raining",
+        "sunny",
+        "cloudy",
     ],
 
     "humidity": [
@@ -32,9 +36,43 @@ class MessageParser:
     }
 
     @classmethod
+    def extract_standalone_city(cls, message):
+    
+        weather_words = {
+            "weather",
+            "temperature",
+            "hot",
+            "cold",
+            "warm",
+            "cool",
+            "rain",
+            "raining",
+            "sunny",
+            "cloudy",
+            "humidity",
+            "humid",
+            "wind",
+            "windy",
+            "breeze",
+            "forecast",
+            }
+    
+        words = message.split()
+    
+        # If the message contains weather-related language,
+         # don't interpret the remaining words as a city.
+        if any(word in weather_words for word in words):
+            return None
+    
+        if 1 <= len(words) <= 4:
+            return message.title()
+    
+        return None
+
+    @classmethod
     def parse(cls, message, last_city=None):
 
-        message = message.lower()
+        message = message.lower().strip()
 
         intent = cls.detect_intent(message)
 
@@ -43,6 +81,13 @@ class MessageParser:
         if not city:
             city = last_city
 
+        if intent == "unknown":
+            explicit_city = cls.extract_standalone_city(message)
+
+            if explicit_city:
+                city = explicit_city
+                intent = "weather"
+                
         return {
             "intent": intent,
             "city": city,
@@ -55,8 +100,12 @@ class MessageParser:
 
         for intent, keywords in cls.INTENTS.items():
 
-            if any(keyword in message for keyword in keywords):
-                return intent
+             for keyword in keywords:
+
+                pattern = rf"\b{re.escape(keyword)}\b"
+
+                if re.search(pattern, message):
+                    return intent
 
         return "unknown"
     
@@ -92,7 +141,12 @@ class MessageParser:
             "how",
             "whats",
             "tell",
-            "me"
+            "me",
+            "rain",
+            "raining",
+            "sunny",
+            "cloudy",
+            "forecast",
         }
 
         possible_city = [

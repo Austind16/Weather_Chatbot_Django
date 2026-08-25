@@ -14,64 +14,173 @@
 
 <div class="auth-page">
 
-    <div class="auth-card">
+    <div class="auth-container">
 
-        <div class="auth-brand">
+        <!-- LEFT SIDE -->
+        <section class="auth-info">
 
-            <div class="auth-brand-icon">
+            <div class="auth-logo">
                 🌤️
             </div>
 
-            <h1>Join ClimaBot</h1>
+            <span class="auth-eyebrow auth-brand">
+                CLIMABOT
+            </span>
 
-            <p>Create your weather assistant account</p>
+            <h1>
+                Create<br>
+                your account
+            </h1>
 
-        </div>
+            <p class="auth-description">
+                Join ClimaBot to save your place, revisit
+                conversations, and get faster access to
+                weather insights.
+            </p>
 
 
-        <form method="POST" class="auth-form">
+            <div class="feature-list">
 
-            {% csrf_token %}
+                <div class="feature-card">
 
-            <div class="auth-field">
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                {{ form.username.errors }}
+                    <div class="feature-icon">
+                        🔐
+                    </div>
+
+                    <div>
+                        <strong>Private access</strong>
+
+                        <span>
+                            Keep your chats and weather lookups in one place.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+                        <strong>Easy setup</strong>
+
+                        <span>
+                            Register once and start chatting immediately.
+                        </span>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="auth-field">
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
+        </section>
 
-                <small class="password-hint">
-                    8+ characters • Avoid common passwords
-                </small>
 
-                {{ form.password1.errors }}
+        <!-- RIGHT SIDE -->
+        <section class="auth-form-panel">
+
+            <div class="form-heading">
+
+                <span class="auth-eyebrow">
+                    NEW ACCOUNT
+                </span>
+
+                <h2>
+                    Register
+                </h2>
+
+                <p>
+                    Fill in your details to create your account.
+                </p>
+
             </div>
 
-            <div class="auth-field">
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
-                {{ form.password2.errors }}
-            </div>
 
-            <button type="submit" class="auth-button">
-                Create Account
-            </button>
+            <form method="POST" class="auth-form">
 
-        </form>
+                {% csrf_token %}
 
 
-        <p class="auth-switch">
+                <!-- USERNAME -->
 
-            Already have an account?
+                <div class="auth-field">
 
-            <a href="{% url 'login' %}">
-                Login
-            </a>
+                    {{ form.username.label_tag }}
 
-        </p>
+                    {{ form.username }}
+
+                    {{ form.username.errors }}
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="auth-field">
+
+                    {{ form.email.label_tag }}
+
+                    {{ form.email }}
+
+                    {{ form.email.errors }}
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="auth-field">
+
+                    {{ form.password1.label_tag }}
+
+                    {{ form.password1 }}
+
+                    <small class="password-hint">
+                        8+ characters • Avoid common passwords
+                    </small>
+
+                    {{ form.password1.errors }}
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="auth-field">
+
+                    {{ form.password2.label_tag }}
+
+                    {{ form.password2 }}
+
+                    {{ form.password2.errors }}
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Create account
+                </button>
+
+            </form>
+
+
+            <p class="auth-switch">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Sign in
+                </a>
+
+            </p>
+
+        </section>
 
     </div>
 

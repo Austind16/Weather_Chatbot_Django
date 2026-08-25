@@ -103,6 +103,11 @@
 
                 {% csrf_token %}
 
+                {% if form.non_field_errors %}
+                    <div class="auth-error">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
 
                 <!-- EMAIL -->
 

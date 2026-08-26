@@ -951,3 +951,47 @@ document.addEventListener("DOMContentLoaded", function () {
     scrollToBottom();
 
 });
+
+/* =========================================
+   ClimaBot — Dark Mode
+========================================= */
+
+const themeToggle = document.getElementById("theme-toggle");
+
+if (themeToggle) {
+
+    const savedTheme = localStorage.getItem("climabot-theme");
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-mode");
+
+        const isDark =
+            document.body.classList.contains("dark-mode");
+
+        if (isDark) {
+
+            themeToggle.textContent = "☀️";
+
+            localStorage.setItem(
+                "climabot-theme",
+                "dark"
+            );
+
+        } else {
+
+            themeToggle.textContent = "🌙";
+
+            localStorage.setItem(
+                "climabot-theme",
+                "light"
+            );
+        }
+
+    });
+}

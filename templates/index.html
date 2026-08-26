@@ -24,6 +24,10 @@ WeatherChat
         <div class="user-area">
             <span>👋 {{ request.user.username }}</span>
 
+             <button type="button" id="theme-toggle" class="theme-toggle">
+                🌙
+            </button>
+
             <a href="{% url 'logout' %}" class="logout-btn">
                 Logout
             </a>
@@ -49,15 +53,39 @@ WeatherChat
                     <div class="weather-main">
 
                         <div class="weather-icon">
-                            {% if response and response.weather.icon %}    
-                                <img
-                                    id="weather-icon"
-                                    src="https://openweathermap.org/img/wn/{{ response.weather.icon }}@2x.png"
-                                    alt="{{ response.weather.description }}"
-                                >
-                            {% else %}
-                                <span id="weather-icon">🌤️</span>
-                            {% endif %}
+                            {% if response and response.weather.icon %}
+
+                        {% if response.weather.icon == "01d" %}
+
+                            <span
+                                id="weather-icon"
+                                class="custom-weather-icon sun-icon">
+                                ☀️
+                            </span>
+
+                        {% elif response.weather.icon == "01n" %}
+
+                            <span
+                                id="weather-icon"
+                                class="custom-weather-icon moon-icon">
+                                🌙
+                            </span>
+
+                        {% else %}
+
+                            <img
+                                id="weather-icon"
+                                src="https://openweathermap.org/img/wn/{{ response.weather.icon }}@2x.png"
+                                alt="{{ response.weather.description }}"
+                            >
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <span id="weather-icon">🌤️</span>
+
+                    {% endif %}
                         </div>
 
                         <div>
@@ -161,10 +189,6 @@ WeatherChat
 
                 <div>
                     <h2>Conversation</h2>
-                    <span class="status">
-                        <span class="status-dot"></span>
-                        Online
-                    </span>
                 </div>
 
                     <button

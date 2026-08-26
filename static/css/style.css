@@ -141,7 +141,7 @@ body {
 
     color: var(--dark);
 
-    font-size: 24px;
+    font-size: 30px;
 
     font-weight: 800;
 
@@ -154,7 +154,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 13px;
+    font-size: 16px;
 }
 
 
@@ -165,11 +165,11 @@ body {
 
     align-items: center;
 
-    gap: 18px;
+    gap: 20px;
 
     color: var(--muted);
 
-    font-size: 14px;
+    font-size: 19px;
 
     font-weight: 600;
 }
@@ -188,7 +188,7 @@ body {
 
     text-decoration: none;
 
-    font-size: 13px;
+    font-size: 16px;
 
     font-weight: 700;
 
@@ -256,7 +256,7 @@ body {
 
     color: var(--dark);
 
-    font-size: 14px;
+    font-size: 17px;
 
     font-weight: 800;
 
@@ -282,21 +282,28 @@ body {
 /* Main weather */
 
 .weather-main {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 210px;
+
     display: flex;
 
     align-items: center;
 
     gap: 25px;
 
-    padding: 25px;
+    padding: 30px;
 
     border-radius: 22px;
 
     background:
         linear-gradient(
             135deg,
-            #edf9ff,
-            #f7fdff
+            #e8f7ff 0%,
+            #f4fcff 55%,
+            #eefbf8 100%
         );
 
     border: 1px solid #dceff5;
@@ -306,8 +313,8 @@ body {
 /* Weather icon */
 
 .weather-icon {
-    width: 105px;
-    height: 105px;
+    width: 125px;
+    height: 125px;
 
     flex-shrink: 0;
 
@@ -316,18 +323,24 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 25px;
+    border-radius: 30px;
 
     background: white;
 
     box-shadow:
         0 10px 25px rgba(60, 130, 160, 0.1);
+
+    position: relative;
+    z-index: 1;
+
+    box-shadow:
+        0 14px 30px rgba(60, 130, 160, 0.13);
 }
 
 
 .weather-icon img {
-    width: 90px;
-    height: 90px;
+    width: 108px;
+    height: 108px;
 
     object-fit: contain;
 }
@@ -345,7 +358,7 @@ body {
 
     color: var(--dark);
 
-    font-size: 25px;
+    font-size: 32px;
 
     font-weight: 800;
 }
@@ -356,7 +369,7 @@ body {
 .temperature {
     color: var(--dark);
 
-    font-size: 48px;
+    font-size: 60px;
 
     line-height: 1;
 
@@ -371,7 +384,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 14px;
+    font-size: 17px;
 
     font-weight: 600;
 
@@ -389,22 +402,23 @@ body {
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
-    gap: 13px;
+    gap: 15px;
 
-    margin-top: 18px;
+    margin-top: 22px;
 }
 
 
 .weather-stat {
+    min-height: 82px;
     display: flex;
 
     align-items: center;
 
     gap: 13px;
 
-    padding: 17px;
+    padding: 18px;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
     background: #f9fcfe;
 
@@ -419,14 +433,16 @@ body {
 .weather-stat:hover {
     transform: translateY(-2px);
 
+    border-color: #c8e1ea;
+
     box-shadow:
         0 8px 18px rgba(55, 111, 137, 0.08);
 }
 
 
 .stat-icon {
-    width: 43px;
-    height: 43px;
+    width: 48px;
+    height: 48px;
 
     flex-shrink: 0;
 
@@ -435,7 +451,7 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 13px;
+    border-radius: 14px;
 
     background:
         linear-gradient(
@@ -444,7 +460,7 @@ body {
             #e8faf8
         );
 
-    font-size: 20px;
+    font-size: 24px;
 }
 
 
@@ -455,7 +471,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 11px;
+    font-size: 14px;
 
     font-weight: 600;
 }
@@ -466,7 +482,7 @@ body {
 
     color: var(--text);
 
-    font-size: 14px;
+    font-size: 17px;
 
     font-weight: 800;
 }
@@ -589,7 +605,7 @@ body {
 
     color: var(--dark);
 
-    font-size: 19px;
+    font-size: 24px;
 
     font-weight: 800;
 }
@@ -606,7 +622,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 12px;
+    font-size: 15px;
 
     font-weight: 600;
 }
@@ -640,7 +656,7 @@ body {
 
     font-family: inherit;
 
-    font-size: 12px;
+    font-size: 15px;
 
     font-weight: 700;
 
@@ -715,7 +731,7 @@ body {
 
     width: 100%;
 
-    margin-bottom: 18px;
+    margin-bottom: 22px;
 }
 
 
@@ -729,7 +745,7 @@ body {
 
     align-items: flex-end;
 
-    gap: 10px;
+    gap: 12px;
 }
 
 
@@ -738,15 +754,16 @@ body {
 ========================================= */
 
 .user-message {
-    max-width: 72%;
+    max-width: 70%;
 
-    padding: 15px 18px;
+    padding: 17px 21px;
 
     border-radius:
-        19px
-        19px
-        5px
-        19px;
+        
+        21px
+        21px
+        6px
+        21px;
 
     background:
         linear-gradient(
@@ -758,14 +775,16 @@ body {
     color: white;
 
     box-shadow:
-        0 7px 17px rgba(40, 107, 237, 0.16);
+        
+        0 8px 20px rgba(40, 107, 237, 0.18);
 }
 
 
 .user-message .message-text {
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 17px;
 
-    line-height: 1.55;
+    line-height: 1.6;
 
     word-break: break-word;
 }
@@ -776,8 +795,8 @@ body {
 ========================================= */
 
 .bot-avatar {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
 
     flex-shrink: 0;
 
@@ -786,7 +805,7 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     background:
         linear-gradient(
@@ -795,7 +814,7 @@ body {
             #16a6a1
         );
 
-    font-size: 18px;
+    font-size: 21px;
 
     box-shadow:
         0 6px 14px rgba(40, 120, 237, 0.14);
@@ -807,17 +826,18 @@ body {
 ========================================= */
 
 .bot-message {
-    max-width: 72%;
+    max-width: 70%;
 
-    padding: 15px 18px;
+    padding: 17px 21px;
 
     border-radius:
-        19px
-        19px
-        19px
-        5px;
+        
+        21px
+        21px
+        21px
+        6px;
 
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #dfebf0;
 
@@ -829,9 +849,10 @@ body {
 
 
 .bot-message .message-text {
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 17px;
 
-    line-height: 1.55;
+    line-height: 1.6;
 
     word-break: break-word;
 }
@@ -842,11 +863,12 @@ body {
 ========================================= */
 
 .message-time {
+    font-weight: 500;
     display: block;
 
-    margin-top: 8px;
+    margin-top: 9px;
 
-    font-size: 10px;
+    font-size: 11px;
 
     line-height: 1;
 
@@ -905,7 +927,7 @@ body {
             #effcf9
         );
 
-    font-size: 46px;
+    font-size: 55px;
 }
 
 
@@ -914,7 +936,7 @@ body {
 
     color: var(--dark);
 
-    font-size: 21px;
+    font-size: 26px;
 
     font-weight: 800;
 }
@@ -925,7 +947,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 14px;
+    font-size: 17px;
 }
 
 
@@ -936,7 +958,7 @@ body {
 .chat-footer {
     flex-shrink: 0;
 
-    padding: 17px 20px 15px;
+    padding: 20px 22px 16px;
 
     border-top: 1px solid var(--border);
 
@@ -949,7 +971,7 @@ body {
 
     align-items: center;
 
-    gap: 11px;
+    gap: 12px;
 }
 
 
@@ -961,11 +983,11 @@ body {
 
     min-width: 0;
 
-    padding: 15px 17px;
+    padding: 14px 18px;
 
     border: 1px solid #d2e0e8;
 
-    border-radius: 14px;
+    border-radius: 17px;
 
     background: #f8fcfe;
 
@@ -973,7 +995,7 @@ body {
 
     font-family: inherit;
 
-    font-size: 14px;
+    font-size: 17px;
 
     outline: none;
 
@@ -1018,11 +1040,11 @@ body {
 
     gap: 8px;
 
-    padding: 15px 19px;
+    padding: 14px 20px;
 
     border: none;
 
-    border-radius: 14px;
+    border-radius: 17px;
 
     background:
         linear-gradient(
@@ -1036,7 +1058,7 @@ body {
 
     font-family: inherit;
 
-    font-size: 13px;
+    font-size: 16px;
 
     font-weight: 800;
 
@@ -1075,7 +1097,7 @@ body {
 
 
 .send-icon {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 
@@ -1084,11 +1106,11 @@ body {
 ========================================= */
 
 .input-hint {
-    margin: 8px 3px 0;
+    margin: 8px 4px 0;
 
     color: #9aadb8;
 
-    font-size: 10px;
+    font-size: 12px;
 }
 
 
@@ -1317,7 +1339,7 @@ body {
     .clear-chat-btn {
         padding: 8px 10px;
 
-        font-size: 10px;
+        font-size: 12px;
     }
 
 
@@ -1355,212 +1377,347 @@ body {
         padding: 13px 15px;
     }
 }
+
 /* =========================================
-   ClimaBot — Typography Scale
-   ~25% larger
+   ClimaBot — Weather Hero Decoration
 ========================================= */
-
-/* Header */
-.brand h1 {
-    font-size: 30px;
-}
-
-.brand p {
-    font-size: 16px;
-}
-
-.user-area {
-    font-size: 17px;
-}
-
-.logout-btn {
-    font-size: 16px;
-}
-
-
-/* Weather panel */
-.panel-heading {
-    font-size: 17px;
-}
-
-.weather-main h2 {
-    font-size: 31px;
-}
-
-.temperature {
-    font-size: 60px;
-}
-
-#weather-description {
-    font-size: 17px;
-}
-
-
-/* Weather statistics */
-.weather-stat small {
-    font-size: 14px;
-}
-
-.weather-stat strong {
-    font-size: 17px;
-}
-
-.stat-icon {
-    font-size: 22px;
-}
-
-
-/* Chat header */
-.chat-header h2 {
-    font-size: 24px;
-}
-
-.status {
-    font-size: 15px;
-}
-
-.clear-chat-btn {
-    font-size: 15px;
-}
-
-
-/* Chat messages */
-.user-message .message-text,
-.bot-message .message-text {
-    font-size: 17px;
-    line-height: 1.6;
-}
-
-.message-time {
-    font-size: 12px;
-}
-
-
-/* Welcome */
-.welcome-message h3 {
-    font-size: 26px;
-}
-
-.welcome-message p {
-    font-size: 17px;
-}
-
-.welcome-icon {
-    font-size: 55px;
-}
-
-
-/* Chat input */
-#chat-form input,
-#chat-form textarea {
-    font-size: 17px;
-}
-
-.send-button {
-    font-size: 16px;
-}
-
-.input-hint {
-    font-size: 12px;
-}
-.user-area {
-    font-size: 19px;
-    gap: 20px;
-}
-
-.user-area span {
-    font-size: 19px;
-}
-
-.user-area span:first-child {
-    font-size: 19px;
-}
-/* =========================================
-   ClimaBot Weather Hero
-========================================= */
-
-.weather-main {
-    position: relative;
-    overflow: hidden;
-
-    min-height: 210px;
-
-    padding: 30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e8f7ff 0%,
-            #f4fcff 55%,
-            #eefbf8 100%
-        );
-}
-
-
-/* Decorative background glow */
 
 .weather-main::after {
     content: "☁";
 
     position: absolute;
-
     right: -15px;
     bottom: -45px;
 
     font-size: 150px;
-
     opacity: 0.12;
 
     pointer-events: none;
 }
 
-
-/* Weather icon */
-
-.weather-icon {
-    width: 125px;
-    height: 125px;
-
-    border-radius: 30px;
-
-    position: relative;
-    z-index: 1;
-
-    box-shadow:
-        0 14px 30px rgba(60, 130, 160, 0.13);
-}
-
-.weather-icon img {
-    width: 108px;
-    height: 108px;
-}
-
-
-/* Weather information */
-
 .weather-main > div:last-child {
     position: relative;
-
     z-index: 1;
 }
 
 
-.weather-main h2 {
-    margin-bottom: 8px;
+/* =========================================
+   ClimaBot — Custom Weather Icons
+========================================= */
 
-    font-size: 32px;
+.custom-weather-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    line-height: 1;
+}
+
+.sun-icon {
+    font-size: 72px;
+    filter: drop-shadow(
+        0 6px 10px rgba(255, 174, 0, 0.25)
+    );
+}
+
+.moon-icon {
+    font-size: 68px;
+    filter: drop-shadow(
+        0 6px 10px rgba(80, 100, 150, 0.2)
+    );
 }
 
 
-.temperature {
-    font-size: 60px;
+/* =========================================
+   ClimaBot — Chat Animation
+========================================= */
 
-    letter-spacing: -2.5px;
+.message-row {
+    animation: messageAppear 0.25s ease-out;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
-#weather-description {
-    font-size: 17px;
+/* =========================================
+   ClimaBot — Chat Background
+========================================= */
 
-    margin-top: 11px;
+.chat-body {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(40, 107, 237, 0.035),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(17, 142, 133, 0.035),
+            transparent 30%
+        ),
+        #f8fcfe;
+}
+
+
+/* =========================================
+   ClimaBot — Theme Toggle
+========================================= */
+
+.theme-toggle {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dceaf0;
+    border-radius: 13px;
+
+    background: #f5fafc;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   ClimaBot — Dark Mode
+========================================= */
+
+body.dark-mode {
+    --background: #0d1720;
+    --white: #16242e;
+    --dark: #e8f4f8;
+    --text: #d9e9ef;
+    --muted: #91a8b5;
+    --border: #293c48;
+    --bot-bg: #1b2b35;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b1822 0%,
+            #101d27 50%,
+            #171d24 100%
+        );
+}
+
+body.dark-mode .app-header,
+body.dark-mode .weather-panel,
+body.dark-mode .chat-panel {
+    background: rgba(20, 34, 44, 0.96);
+    border-color: #293c48;
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .brand h1,
+body.dark-mode .chat-header h2,
+body.dark-mode .weather-main h2,
+body.dark-mode .weather-empty h3,
+body.dark-mode .welcome-message h3 {
+    color: #e8f4f8;
+}
+
+body.dark-mode .brand p,
+body.dark-mode .user-area,
+body.dark-mode .status,
+body.dark-mode #weather-description,
+body.dark-mode .weather-empty p,
+body.dark-mode .welcome-message p {
+    color: #91a8b5;
+}
+
+body.dark-mode .theme-toggle {
+    background: #243742;
+    border-color: #405562;
+}
+
+body.dark-mode .panel-heading,
+body.dark-mode .chat-header {
+    border-color: #293c48;
+}
+
+body.dark-mode .weather-main {
+    background:
+        linear-gradient(
+            135deg,
+            #172f3d,
+            #182c35,
+            #183631
+        );
+
+    border-color: #29434f;
+}
+
+body.dark-mode .weather-icon {
+    background: #223640;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .weather-stat {
+    background:
+        linear-gradient(
+            145deg,
+            #1b2d37,
+            #182831
+        );
+
+    border-color: #2b414d;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.18);
+}
+
+body.dark-mode .weather-stat:hover {
+    border-color: #3a5867;
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .weather-stat small {
+    color: #91a8b5;
+}
+
+body.dark-mode .weather-stat strong {
+    color: #e1f0f5;
+}
+
+body.dark-mode .stat-icon {
+    background:
+        linear-gradient(
+            135deg,
+            #203b4a,
+            #1d403d
+        );
+}
+
+body.dark-mode .chat-body {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(40, 107, 237, 0.07),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(17, 142, 133, 0.06),
+            transparent 30%
+        ),
+        #101c24;
+}
+
+body.dark-mode .bot-message {
+    background: #1b2c36;
+    border-color: #304752;
+    color: #dcecf2;
+
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .user-message {
+    background:
+        linear-gradient(
+            135deg,
+            #286bed,
+            #167dce
+        );
+}
+
+body.dark-mode .chat-footer {
+    background: #14232d;
+    border-color: #293c48;
+}
+
+body.dark-mode #chat-form input,
+body.dark-mode #chat-form textarea {
+    background: #1b2d37;
+    border-color: #344c58;
+    color: #e1f0f5;
+}
+
+body.dark-mode #chat-form input:hover,
+body.dark-mode #chat-form textarea:hover,
+body.dark-mode #chat-form input:focus,
+body.dark-mode #chat-form textarea:focus {
+    background: #20343f;
+}
+
+body.dark-mode #chat-form input:focus,
+body.dark-mode #chat-form textarea:focus {
+    border-color: #3d8cff;
+}
+
+body.dark-mode #chat-form input::placeholder,
+body.dark-mode #chat-form textarea::placeholder {
+    color: #718996;
+}
+
+body.dark-mode .clear-chat-btn {
+    background: #351f24;
+    border-color: #553139;
+    color: #f18a94;
+}
+
+body.dark-mode .logout-btn {
+    background: #1c3441;
+    border-color: #304c5a;
+    color: #75b9ff;
+}
+
+body.dark-mode .weather-empty-icon,
+body.dark-mode .welcome-icon {
+    background:
+        linear-gradient(
+            135deg,
+            #1b303b,
+            #1b3534
+        );
+}
+
+body.dark-mode .chat-body::-webkit-scrollbar-thumb {
+    background: #3a535f;
+}
+
+body.dark-mode .chat-body::-webkit-scrollbar-thumb:hover {
+    background: #4b6875;
+}
+
+
+/* =========================================
+   ClimaBot — Responsive Final Touches
+========================================= */
+
+@media (max-width: 650px) {
+    .user-area span {
+        display: none;
+    }
 }

@@ -13,3 +13,6 @@ media/
 
 # VS Code
 .vscode/
+
+# Machine Learning models
+*.joblib

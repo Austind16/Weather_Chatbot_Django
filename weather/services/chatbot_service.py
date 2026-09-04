@@ -19,10 +19,13 @@ class ChatbotService:
 
         try:
 
+            normalized_message = MessageParser.normalize_message(message)
+
             nlp_result = cls.nlp_processor.process(message)
 
             intent = nlp_result["intent"]
             city = nlp_result["location"]
+            date = nlp_result.get("date")
             confidence = nlp_result["confidence"]
 
             print("\n--- NLP RESULT ---")
@@ -45,18 +48,38 @@ class ChatbotService:
                     "intent": intent,
                     "city": city,
                     "confidence": confidence,
-                    "date": nlp_result["date"]
+                    "date": nlp_result.get("date")
                 }
 
             else:
+                print("NLP confidence low → combining NLP + rule-based parser")
 
-                print("NLP confidence too low → using rule-based parser")
+                rule_parsed = MessageParser.parse(normalized_message, last_city)
 
-                parsed = MessageParser.parse(
-                    message,
-                    last_city
+                # Prefer the rule parser's intent if it found a clear one
+                if rule_parsed["intent"] != "unknown":
+                    final_intent = rule_parsed["intent"]
+                else:
+                    final_intent = intent
+
+                # Prefer NLP's extracted city, otherwise rule parser
+                final_city = city or rule_parsed.get("city") or last_city
+
+                # Always preserve NLP date extraction
+                final_date = (
+                    nlp_result.get("date")
+                    or rule_parsed.get("date")
                 )
-                parsed["date"] = None
+
+                parsed = {
+                    "intent": final_intent,
+                    "city": final_city,
+                    "confidence": max(
+                        confidence,
+                        rule_parsed["confidence"]
+                    ),
+                    "date": final_date
+                }
 
         except Exception as e:
 
@@ -76,7 +99,9 @@ class ChatbotService:
         city = parsed["city"]
         confidence = parsed["confidence"]
         date_text = parsed.get("date")
-        target_date = DateResolver.resolve(date_text)
+        target_date = DateResolver.resolve(
+        parsed.get("date")
+        )
 
         # --------------------------------
         # 4. Greeting
@@ -145,9 +170,11 @@ class ChatbotService:
 
             rain_probability = summary["rain_probability"] * 100
 
+            date_label = target_date.strftime("%A, %d %B")
+
             if intent == "rain":
                 reply = (
-                    f"In {forecast_result['city']} tomorrow, "
+                    f"In {forecast_result['city']} on {date_label}, "
                     f"the forecast is {summary['description']} "
                     f"with a {rain_probability:.0f}% chance of rain. "
                     f"Temperatures will range from "
@@ -155,12 +182,43 @@ class ChatbotService:
                     f"{summary['temperature_max']:.1f}°C."
                 )
 
+            elif intent == "humidity":
+                humidity_values = [
+                    entry["main"]["humidity"]
+                    for entry in forecast_result["forecast"]
+                ]
+
+                min_humidity = min(humidity_values)
+                max_humidity = max(humidity_values)
+
+                reply = (
+                    f"In {forecast_result['city']} on {date_label}, "
+                    f"humidity is expected to range from "
+                    f"{min_humidity}% to {max_humidity}%."
+                )
+
+            elif intent == "wind":
+                wind_values = [
+                    entry["wind"]["speed"]
+                    for entry in forecast_result["forecast"]
+                ]
+
+                min_wind = min(wind_values)
+                max_wind = max(wind_values)
+
+                reply = (
+                    f"In {forecast_result['city']} on {date_label}, "
+                    f"wind speeds are expected to range from "
+                    f"{min_wind:.1f} to {max_wind:.1f} m/s."
+                )
+
             else:
                 reply = (
-                    f"In {forecast_result['city']} tomorrow, "
+                    f"In {forecast_result['city']} on {date_label}, "
                     f"expect {summary['description']} with temperatures "
                     f"between {summary['temperature_min']:.1f}°C and "
-                    f"{summary['temperature_max']:.1f}°C."
+                    f"{summary['temperature_max']:.1f}°C. "
+                    f"There is a {rain_probability:.0f}% chance of rain."
                 )
 
             return {

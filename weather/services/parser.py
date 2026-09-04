@@ -35,6 +35,50 @@ class MessageParser:
     ]
     }
 
+    DATE_CORRECTIONS = {
+        "tommorow": "tomorrow",
+        "tomorow": "tomorrow",
+        "tmrw": "tomorrow",
+        "todai": "today",
+        "yesturday": "yesterday",
+    }
+
+    DATE_WORDS = {
+        "today",
+        "tomorrow",
+        "yesterday",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+    }
+
+    @classmethod
+    def normalize_message(cls, message):
+        message = message.lower().strip()
+
+        for wrong, correct in cls.DATE_CORRECTIONS.items():
+            message = re.sub(
+                rf"\b{re.escape(wrong)}\b",
+                correct,
+                message
+            )
+
+        return message
+
+
+    @classmethod
+    def extract_date(cls, message):
+        for date_word in cls.DATE_WORDS:
+            if re.search(rf"\b{re.escape(date_word)}\b", message):
+                return date_word
+
+        return None
+
+    
     @classmethod
     def extract_standalone_city(cls, message):
     
@@ -72,11 +116,13 @@ class MessageParser:
     @classmethod
     def parse(cls, message, last_city=None):
 
-        message = message.lower().strip()
+        message = cls.normalize_message(message)
 
         intent = cls.detect_intent(message)
 
         city = cls.extract_city(message)
+
+        date = cls.extract_date(message)
 
         if not city:
             city = last_city
@@ -92,7 +138,8 @@ class MessageParser:
             "intent": intent,
             "city": city,
             "confidence" : 1.0 if intent != "unknown" else 0.0,
-            "original_message": message
+            "original_message": message,
+            "date": date
         }
 
     @classmethod
@@ -147,6 +194,26 @@ class MessageParser:
             "sunny",
             "cloudy",
             "forecast",
+            "weather",
+            "today",
+            "tomorrow",
+            "yesterday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+
+            "will",
+            "be",
+            "about",
+            "for",
+            "how",
+            "can",
+            "could",
+            "would",
         }
 
         possible_city = [

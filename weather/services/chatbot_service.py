@@ -21,7 +21,7 @@ class ChatbotService:
 
             normalized_message = MessageParser.normalize_message(message)
 
-            nlp_result = cls.nlp_processor.process(message)
+            nlp_result = cls.nlp_processor.process(normalized_message)
 
             intent = nlp_result["intent"]
             city = nlp_result["location"]

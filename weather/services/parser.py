@@ -186,6 +186,8 @@ class MessageParser:
             "the",
             "what",
             "how",
+            "ho",
+            "wi",
             "whats",
             "tell",
             "me",

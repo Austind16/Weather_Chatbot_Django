@@ -1,27 +1,31 @@
-from django.test import TestCase
-
-# Create your tests here.
 import os
+import sys
+from pathlib import Path
 import django
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
-from weather.services.weather_service import WeatherService
+from weather.services.chatbot_service import ChatbotService
 
+print("\n==========================================")
+print("TEST 1: Past Date (yesterday)")
+r1 = ChatbotService.process_message("weather in mumbai yesterday")
+print("Response:", r1.get("reply"))
+print("Success:", r1.get("success"))
 
-result = WeatherService.get_forecast("Mumbai")
+print("\n==========================================")
+print("TEST 2: Beyond 5 Days (next Tuesday is 6 days away)")
+r2 = ChatbotService.process_message("weather in mumbai on tuesday")
+print("Response:", r2.get("reply"))
+print("Success:", r2.get("success"))
 
-print("\n--- FORECAST TEST ---")
-print("Success:", result["success"])
-
-if result["success"]:
-    print("City:", result["city"])
-    print("Country:", result["country"])
-    print("Forecast entries:", len(result["forecast"]))
-
-    print("\nFirst forecast entry:")
-    print(result["forecast"][0])
-
-else:
-    print("Error:", result["message"])
+print("\n==========================================")
+print("TEST 3: Within 5 Days (tomorrow)")
+r3 = ChatbotService.process_message("weather in mumbai tomorrow")
+print("Response:", r3.get("reply"))
+print("Success:", r3.get("success"))
+print("==========================================\n")

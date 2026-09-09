@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 from .parser import MessageParser
 from .weather_service import WeatherService
 from .nlp.processor import NLPProcessor
@@ -25,7 +25,7 @@ class ChatbotService:
 
             intent = nlp_result["intent"]
             city = nlp_result["location"]
-            date = nlp_result.get("date")
+            nlp_date = nlp_result.get("date")
             confidence = nlp_result["confidence"]
 
             print("\n--- NLP RESULT ---")
@@ -48,11 +48,11 @@ class ChatbotService:
                     "intent": intent,
                     "city": city,
                     "confidence": confidence,
-                    "date": nlp_result.get("date")
+                    "date": nlp_date
                 }
 
             else:
-                print("NLP confidence low → combining NLP + rule-based parser")
+                print("NLP confidence low -> combining NLP + rule-based parser")
 
                 rule_parsed = MessageParser.parse(normalized_message, last_city)
 
@@ -150,6 +150,27 @@ class ChatbotService:
         # --------------------------------
 
         if target_date:
+            today = datetime.date.today()
+            max_forecast_date = today + datetime.timedelta(days=5)
+
+            if target_date < today:
+                return {
+                    "success": False,
+                    "reply": "I cannot provide historical weather. Please ask for today or upcoming days.",
+                    "weather": None,
+                    "last_city": last_city,
+                    "intent": intent,
+                }
+
+            if target_date > max_forecast_date:
+                return {
+                    "success": False,
+                    "reply": "I can only provide weather forecasts up to 5 days in advance.",
+                    "weather": None,
+                    "last_city": last_city,
+                    "intent": intent,
+                }
+
             forecast_result = WeatherService.get_forecast_for_date(
                 city,
                 target_date

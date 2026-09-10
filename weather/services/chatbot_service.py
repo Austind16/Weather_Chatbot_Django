@@ -41,8 +41,11 @@ class ChatbotService:
 
                 # If NLP didn't find a city,
                 # use the previous city if available
+                # try rule‑based parser first, then fallback to the previous city
                 if not city:
-                    city = last_city
+                    # Attempt rule‑based extraction (may succeed even with high confidence)
+                    rule_parsed = MessageParser.parse(normalized_message, last_city)
+                    city = rule_parsed.get("city") or last_city
 
                 parsed = {
                     "intent": intent,
@@ -97,6 +100,9 @@ class ChatbotService:
 
         intent = parsed["intent"]
         city = parsed["city"]
+        # Ensure we have a city: fall back to last_city if still missing
+        if not city:
+            city = last_city
         confidence = parsed["confidence"]
         date_text = parsed.get("date")
         target_date = DateResolver.resolve(
@@ -136,14 +142,17 @@ class ChatbotService:
         # --------------------------------
 
         if not city:
-
-            return {
-                "success": False,
-                "reply": "Please tell me which city you're asking about.",
-                "weather": None,
-                "last_city": last_city,
-                "intent": intent,
-            }
+            if last_city:
+                # Use the previously known city
+                city = last_city
+            else:
+                return {
+                    "success": False,
+                    "reply": "Please tell me which city you're asking about.",
+                    "weather": None,
+                    "last_city": last_city,
+                    "intent": intent,
+                }
 
         # --------------------------------
         # 7. Get weather

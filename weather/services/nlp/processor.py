@@ -33,7 +33,8 @@ class NLPProcessor:
         # spaCy NLP processing
         # -------------------------
 
-        doc = self.nlp(message)
+        # Title-case message so spaCy NER recognizes lowercase city names as GPE/LOC
+        doc = self.nlp(message.title())
 
         location = None
         date = None
@@ -41,10 +42,10 @@ class NLPProcessor:
         for ent in doc.ents:
 
             if ent.label_ in {"GPE", "LOC"} and location is None:
-                location = ent.text
+                location = ent.text.lower()
 
             elif ent.label_ in {"DATE", "TIME"} and date is None:
-                date = ent.text
+                date = ent.text.lower()
 
         # -------------------------
         # Combined result

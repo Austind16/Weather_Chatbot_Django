@@ -60,6 +60,9 @@ class MessageParser:
     def normalize_message(cls, message):
         message = message.lower().strip()
 
+        # Remove punctuation marks like ?, !, ., ,
+        message = message.translate(str.maketrans("", "", string.punctuation))
+
         for wrong, correct in cls.DATE_CORRECTIONS.items():
             message = re.sub(
                 rf"\b{re.escape(wrong)}\b",
@@ -101,15 +104,17 @@ class MessageParser:
             "forecast",
             }
     
-        words = message.split()
+        # Remove leading prepositions like "in ahmedabad", "at delhi", "to tokyo"
+        clean_message = re.sub(r"^(in|at|for|around|to|of)\s+", "", message, flags=re.IGNORECASE).strip()
+        words = clean_message.split()
     
         # If the message contains weather-related language,
-         # don't interpret the remaining words as a city.
+        # don't interpret the remaining words as a city.
         if any(word in weather_words for word in words):
             return None
     
         if 1 <= len(words) <= 4:
-            return message.title()
+            return clean_message.title()
     
         return None
 

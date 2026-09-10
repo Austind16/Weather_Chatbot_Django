@@ -7,7 +7,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
-from .intent_data import TRAINING_DATA
+from pathlib import Path
+try:
+    from .intent_data import TRAINING_DATA
+except ImportError:
+    from intent_data import TRAINING_DATA
 import joblib
 
 
@@ -38,7 +42,8 @@ model = Pipeline([
     (
         "classifier",
         LogisticRegression(
-            max_iter=1000
+            max_iter=1000,
+            C=2.0
         )
     )
 ])
@@ -47,12 +52,13 @@ model = Pipeline([
 # Train
 model.fit(X_train, y_train)
 
+model_path = Path(__file__).resolve().parent / "intent_model.joblib"
 joblib.dump(
     model,
-    "weather/services/nlp/intent_model.joblib"
+    model_path
 )
 
-print("Intent model saved successfully.")
+print(f"Intent model saved successfully to {model_path}.")
 
 # Evaluate
 predictions = model.predict(X_test)
@@ -87,4 +93,4 @@ disp = ConfusionMatrixDisplay(
 disp.plot(xticks_rotation=45)
 
 plt.tight_layout()
-plt.show()
+# plt.show()  # Commented out to allow headless / non-blocking execution

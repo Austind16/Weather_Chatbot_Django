@@ -115,7 +115,7 @@ body {
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
-    transition: 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .logout-btn:hover {
@@ -404,7 +404,7 @@ body {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .clear-chat-btn:hover {
@@ -465,24 +465,30 @@ body {
     gap: 12px;
 }
 
+/* Shared Message Bubble Styles */
+
+.user-message,
+.bot-message {
+    max-width: 70%;
+    padding: 17px 21px;
+}
+
+.message-text {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
 /* =========================================
    USER MESSAGE
 ========================================= */
 
 .user-message {
-    max-width: 70%;
-    padding: 17px 21px;
     border-radius: 21px 21px 6px 21px;
     background: linear-gradient(135deg, #286bed, #167dce);
     color: white;
     box-shadow: 0 8px 20px rgba(40, 107, 237, 0.18);
-}
-
-.user-message .message-text {
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 1.6;
-    word-break: break-word;
 }
 
 /* =========================================
@@ -507,20 +513,11 @@ body {
 ========================================= */
 
 .bot-message {
-    max-width: 70%;
-    padding: 17px 21px;
     border-radius: 21px 21px 21px 6px;
     background: #ffffff;
     border: 1px solid #dfebf0;
     color: var(--text);
     box-shadow: 0 5px 14px rgba(55, 111, 137, 0.07);
-}
-
-.bot-message .message-text {
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 1.6;
-    word-break: break-word;
 }
 
 /* =========================================
@@ -1076,14 +1073,13 @@ body.dark-mode #chat-form textarea {
 }
 
 body.dark-mode #chat-form input:hover,
-body.dark-mode #chat-form textarea:hover,
-body.dark-mode #chat-form input:focus,
-body.dark-mode #chat-form textarea:focus {
+body.dark-mode #chat-form textarea:hover {
     background: #20343f;
 }
 
 body.dark-mode #chat-form input:focus,
 body.dark-mode #chat-form textarea:focus {
+    background: #20343f;
     border-color: #3d8cff;
 }
 
@@ -1115,14 +1111,4 @@ body.dark-mode .chat-body::-webkit-scrollbar-thumb {
 
 body.dark-mode .chat-body::-webkit-scrollbar-thumb:hover {
     background: #4b6875;
-}
-
-/* =========================================
-   ClimaBot — Responsive Final Touches
-========================================= */
-
-@media (max-width: 650px) {
-    .user-area span {
-        display: none;
-    }
 }

@@ -236,12 +236,12 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.auth-field input:hover {
+.auth-field input:hover,
+.auth-field input:focus {
     background: white;
 }
 
 .auth-field input:focus {
-    background: white;
     border-color: #3d8cff;
     box-shadow: 0 0 0 4px rgba(61, 140, 255, 0.13);
 }
@@ -308,6 +308,25 @@
     list-style: none;
     color: #d95f67;
     font-size: 11px;
+}
+
+.auth-error {
+    display: block;
+    margin: 0 0 22px;
+    padding: 13px 16px;
+    border: 1px solid #f1b8bd;
+    border-radius: 13px;
+    background: #fff1f2;
+    color: #c0394b;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.auth-error ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 /* =========================================
@@ -395,23 +414,4 @@
     .feature-card {
         padding: 11px;
     }
-}
-
-.auth-error {
-    display: block;
-    margin: 0 0 22px;
-    padding: 13px 16px;
-    border: 1px solid #f1b8bd;
-    border-radius: 13px;
-    background: #fff1f2;
-    color: #c0394b;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.5;
-}
-
-.auth-error ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
 }

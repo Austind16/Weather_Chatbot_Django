@@ -72,10 +72,10 @@
     color: var(--landing-blue);
 }
 
-.landing-nav-cta {
+.landing-nav .landing-nav-cta {
     padding: 12px 18px;
     border-radius: 12px;
-    color: #ffffff !important;
+    color: #ffffff;
     background: #1760d5;
     box-shadow: 0 9px 20px rgba(40, 107, 237, 0.2);
 }
@@ -115,10 +115,10 @@
     max-width: 650px;
     margin: 0;
     color: var(--landing-ink);
-    font-size: clamp(46px, 5.6vw, 74px);
+    font-size: clamp(48px, 6.1vw, 82px);
     font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1.02;
+    letter-spacing: -3.5px;
+    line-height: 0.98;
 }
 
 .landing-description {
@@ -256,19 +256,15 @@
     font-size: 43px;
 }
 
-.weather-condition,
-.weather-date {
-    margin: 0;
-}
-
 .weather-condition {
+    margin: 0;
     color: var(--landing-ink);
     font-size: 17px;
     font-weight: 800;
 }
 
 .weather-date {
-    margin-top: 7px;
+    margin: 7px 0 0;
     color: var(--landing-muted);
     font-size: 11px;
 }
@@ -429,14 +425,11 @@
 
     .landing-nav {
         gap: 14px;
+        margin-left: auto;
     }
 
     .landing-nav a:first-child {
         display: none;
-    }
-
-    .landing-nav {
-        margin-left: auto;
     }
 
     .landing-hero {
@@ -482,18 +475,12 @@
         gap: 9px;
     }
 
-    .landing-nav a:first-child {
-        display: none;
-    }
-
     .landing-nav a {
         font-size: 11px;
     }
 
     .landing-nav-cta {
         padding: 10px 12px;
-        color: #ffffff !important;
-        background: #1760d5;
     }
 
     .landing-hero {

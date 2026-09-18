@@ -7,6 +7,9 @@ from .managers.conversation_manager import ConversationManager
 from django.http import JsonResponse
 from .models import Chat
 
+def landing(request):
+    return render(request, "landing.html")
+
 @login_required
 def home(request):
     chats = Chat.objects.filter(

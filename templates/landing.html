@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ClimaBot | Weather that speaks your language{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock %}
+
+{% block navbar %}
+<header class="landing-header">
+    <a class="landing-brand" href="{% url 'home' %}" aria-label="ClimaBot home">
+        <span class="landing-brand-mark" aria-hidden="true">🌤️</span>
+        <span>ClimaBot</span>
+    </a>
+
+    <nav class="landing-nav" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="{% url 'login' %}">Log in</a>
+        <a class="landing-nav-cta" href="{% url 'register' %}">Get started</a>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="landing-page">
+    <section class="landing-hero" aria-labelledby="landing-title">
+        <div class="landing-hero-content">
+            <p class="landing-eyebrow">Your everyday weather companion</p>
+            <h1 id="landing-title">Know the sky before you step outside.</h1>
+            <p class="landing-description">
+                ClimaBot turns live weather into clear, useful answers. Ask about your city,
+                plan your day, and get the details that matter without the forecast overload.
+            </p>
+
+            <div class="landing-actions">
+                <a class="landing-button landing-button-primary" href="{% url 'register' %}">
+                    Start exploring
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a class="landing-button landing-button-secondary" href="{% url 'login' %}">
+                    I already have an account
+                </a>
+            </div>
+
+            <p class="landing-note">
+                Free to get started <span aria-hidden="true">•</span> Ask naturally <span aria-hidden="true">•</span> Stay prepared
+            </p>
+        </div>
+
+        <div class="weather-preview" aria-label="Example ClimaBot weather summary">
+            <div class="weather-preview-topline">
+                <span class="weather-location"><span aria-hidden="true">⌖</span> Bengaluru, India</span>
+                <span class="weather-live"><span aria-hidden="true">●</span> Live view</span>
+            </div>
+
+            <div class="weather-current">
+                <div class="weather-sun" aria-hidden="true">☀️</div>
+                <div>
+                    <p class="weather-condition">Partly cloudy</p>
+                    <p class="weather-date">Tuesday, September 18</p>
+                </div>
+                <strong class="weather-temperature">27°</strong>
+            </div>
+
+            <div class="weather-metrics" aria-label="Current weather details">
+                <div class="weather-metric">
+                    <span class="weather-metric-icon" aria-hidden="true">💧</span>
+                    <span><small>Humidity</small><strong>68%</strong></span>
+                </div>
+                <div class="weather-metric">
+                    <span class="weather-metric-icon" aria-hidden="true">💨</span>
+                    <span><small>Wind</small><strong>12 km/h</strong></span>
+                </div>
+                <div class="weather-metric">
+                    <span class="weather-metric-icon" aria-hidden="true">☂️</span>
+                    <span><small>Rain chance</small><strong>24%</strong></span>
+                </div>
+            </div>
+
+            <div class="weather-chat-preview">
+                <div class="weather-chat-avatar" aria-hidden="true">🌤️</div>
+                <p>“Will I need an umbrella this evening?”</p>
+                <span class="weather-chat-arrow" aria-hidden="true">↗</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="landing-benefits" id="how-it-works" aria-labelledby="benefits-title">
+        <div class="landing-section-heading">
+            <p class="landing-eyebrow">Less searching. More knowing.</p>
+            <h2 id="benefits-title">Weather guidance that keeps up with real life.</h2>
+        </div>
+
+        <div class="benefit-grid">
+            <article class="benefit-item">
+                <span class="benefit-number">01</span>
+                <h3>Ask in your own words</h3>
+                <p>Get useful answers to everyday questions, from rain plans to travel conditions.</p>
+            </article>
+            <article class="benefit-item">
+                <span class="benefit-number">02</span>
+                <h3>See what matters now</h3>
+                <p>Find current conditions and practical details for the place you care about.</p>
+            </article>
+            <article class="benefit-item">
+                <span class="benefit-number">03</span>
+                <h3>Make better plans</h3>
+                <p>Turn a changing forecast into a simple next step for your day.</p>
+            </article>
+        </div>
+    </section>
+</main>
+{% endblock %}

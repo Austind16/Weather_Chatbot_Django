@@ -198,7 +198,6 @@ body {
     justify-content: center;
     border-radius: 30px;
     background: white;
-    box-shadow: 0 10px 25px rgba(60, 130, 160, 0.1);
     position: relative;
     z-index: 1;
     box-shadow: 0 14px 30px rgba(60, 130, 160, 0.13);
@@ -423,7 +422,7 @@ body {
     overflow-y: auto;
     padding: 28px 26px;
     scroll-behavior: smooth;
-    background: linear-gradient(180deg, #fbfdfe 0%, #f8fcfe 100%);
+    background: radial-gradient(circle at 10% 10%, rgba(40, 107, 237, 0.035), transparent 30%), radial-gradient(circle at 90% 80%, rgba(17, 142, 133, 0.035), transparent 30%), #f8fcfe;
 }
 
 /* Scrollbar */
@@ -453,6 +452,7 @@ body {
     display: flex;
     width: 100%;
     margin-bottom: 22px;
+    animation: messageAppear 0.25s ease-out;
 }
 
 .user-row {
@@ -931,10 +931,6 @@ body {
    ClimaBot — Chat Animation
 ========================================= */
 
-.message-row {
-    animation: messageAppear 0.25s ease-out;
-}
-
 @keyframes messageAppear {
     from {
         opacity: 0;
@@ -945,14 +941,6 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-/* =========================================
-   ClimaBot — Chat Background
-========================================= */
-
-.chat-body {
-    background: radial-gradient(circle at 10% 10%, rgba(40, 107, 237, 0.035), transparent 30%), radial-gradient(circle at 90% 80%, rgba(17, 142, 133, 0.035), transparent 30%), #f8fcfe;
 }
 
 /* =========================================

@@ -10,9 +10,11 @@ venv/
 # Django
 db.sqlite3
 media/
+staticfiles/
 
 # VS Code
 .vscode/
 
 # Machine Learning models
 *.joblib
+!weather/services/nlp/intent_model.joblib

@@ -6,3 +6,8 @@ sqlparse==0.5.5
 tzdata==2026.3
 dj-database-url==2.3.0
 gunicorn==23.0.0
+requests==2.32.5
+spacy==3.8.11
+joblib==1.5.2
+scikit-learn==1.9.0
+whitenoise==6.9.0

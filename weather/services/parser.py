@@ -108,10 +108,8 @@ class MessageParser:
         clean_message = re.sub(r"^(in|at|for|around|to|of)\s+", "", message, flags=re.IGNORECASE).strip()
         words = clean_message.split()
     
-        # If the message contains weather-related language,
-        # don't interpret the remaining words as a city.
-        if any(word in weather_words for word in words):
-            return None
+        # Remove early return; let the later ignored‑words filter handle weather terms.
+        # (No action needed here.)
     
         if 1 <= len(words) <= 4:
             return clean_message.title()
@@ -214,6 +212,11 @@ class MessageParser:
             "the",
             "a",
             "an",
+            # Time‑of‑day words that should not be treated as city names
+            "morning",
+            "afternoon",
+            "evening",
+            "night",
 
             # Question words & Verbs
             "what",

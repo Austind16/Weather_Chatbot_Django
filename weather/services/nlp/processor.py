@@ -1,5 +1,6 @@
 import spacy
 import joblib
+import logging
 from pathlib import Path
 
 
@@ -13,8 +14,16 @@ class NLPProcessor:
         # Locate trained intent model
         model_path = Path(__file__).resolve().parent / "intent_model.joblib"
 
-        # Load trained classifier
-        self.intent_model = joblib.load(model_path)
+        # Load trained classifier – may be missing during development
+        try:
+            self.intent_model = joblib.load(model_path)
+        except Exception as e:
+            logging.info(
+                "Intent model not found or failed to load (%s). "
+                "Falling back to rule‑based intent detection.",
+                e,
+            )
+            self.intent_model = None
 
     def process(self, message):
 
@@ -22,12 +31,14 @@ class NLPProcessor:
         # Intent classification
         # -------------------------
 
-        intent = str(self.intent_model.predict([message])[0])
-
-        # Get probability of the predicted intent
-        probabilities = self.intent_model.predict_proba([message])[0]
-
-        confidence = float(max(probabilities))
+        if self.intent_model:
+            intent = str(self.intent_model.predict([message])[0])
+            probabilities = self.intent_model.predict_proba([message])[0]
+            confidence = float(max(probabilities))
+        else:
+            # No model – treat as unknown intent with zero confidence
+            intent = "unknown"
+            confidence = 0.0
 
         # -------------------------
         # spaCy NLP processing
